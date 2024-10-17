@@ -1,0 +1,36 @@
+.toggle-checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+    &:checked + .toggle-switch {
+      background-color: #12B669;
+    }
+    &:checked + .toggle-switch::before {
+      left: 26px;
+    }
+  }
+  .toggle-switch {
+    background-color: #b9bcbc;
+    width: 46px;
+    height: 24px;
+    border-radius: 16px;
+    position: relative;
+    transition: 0.3s;
+    cursor: pointer;
+    &::before {
+      content: "";
+      background-color: white;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      border-radius: 50%;
+      top: 4px;
+      left: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #aaa;
+      transition: 0.3s;
+    }
+  }
+  
