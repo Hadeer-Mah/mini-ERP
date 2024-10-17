@@ -1,0 +1,40 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--font-regular);
+}
+*:focus-visible,
+*:focus {
+  outline: none;
+}
+
+:root {
+  --primary-color: #026980;
+  --secondary-color: #747474;
+  --light-color: #D3D3D3;
+}
+
+p {
+  margin: 0;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}

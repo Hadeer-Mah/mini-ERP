@@ -1,10 +1,10 @@
-import './App.css'
-import MainRoutes from './routes/MainRoutes'
+import './App.scss'
+import MainLayout from './layouts/MainLayout'
 
 function App() {
 
   return (
-    <MainRoutes/>
+    <MainLayout/>
   )
 }
 
