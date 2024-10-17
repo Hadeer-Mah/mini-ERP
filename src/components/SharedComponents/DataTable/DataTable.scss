@@ -1,0 +1,98 @@
+.table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    border-spacing: 0 15px;
+    &::-webkit-scrollbar {
+      background-color: #eaecf0 !important;
+      width: 5px !important;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #00a5b2 !important;
+      border-radius: 3px !important;
+    }
+    .d-none {
+      display: none;
+    }
+    .table-head {
+      th {
+        padding: 10px;
+        text-align: start;
+        white-space: nowrap;
+        border-top: 1px solid #eaecf0;
+        &:last-of-type {
+          text-align: end;
+        }
+      }
+
+    }
+  
+    .table-body {
+      .table-row {
+        border-radius: 16px;
+        height: 72px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        
+        td {
+          padding: 0 10px;
+          text-align: start;
+          border-top: 1px solid #eaecf0;
+          border-bottom: 1px solid #eaecf0;
+          margin-bottom: 15px;
+
+          &:first-child {
+            border: 1px solid #eaecf0;
+            border-radius: 10px 0 0 10px;
+            border-right: none;
+            border-left: none;
+          }
+          &:last-child {
+            border: 1px solid #eaecf0;
+            border-radius: 0 10px 10px 0;
+            border-left: none;
+            border-right: none;
+          }
+          
+        }
+      }
+    }
+  }
+  .table-pagination {
+    // margin-top: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &:only-child {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .pagination {
+      width: 80%;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+  
+      .active {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #00a5b2;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        a {
+          color: white;
+          margin: 0;
+        }
+      }
+    }
+  }
