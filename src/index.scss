@@ -26,90 +26,17 @@ body {
 p {
   margin: 0;
 }
-.modalContainer {
-  width: 100%;
-  // height: 100%;
-  position: fixed;
-  inset: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 3000;
-  background-color: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  &.mapContainer {
-    z-index: 5000;
-    .modalContent {
-      padding: 20px 0;
-    }
-    .modalHeader {
-      padding: 0 20px;
-    }
-    .modalActions {
-      padding: 0 20px;
-      .primary-btn {
-        width: 30%;
-        display: flex;
-        justify-content: center;
-      }
-    }
-    .modalBody {
-      .range-container {
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        .name {
-          color: #98A2B3;
-          font-weight: 500;
-          font-size: 14px;
-          margin: 15px 0 10px;
-        }
-        .location {
-          width: 65%;
-          .address {
-            font-weight: 500;
-            font-size: 15px;
-          }
-        }
-        .map-range {
-          .range {
-            // display: flex;
-            // justify-content: space-between;
-            background-color: #FAFAFB;
-            border-radius: 8px;
-            font-size: 15px;
-            padding: 10px 20px;
-            text-align: center;
-            .add, .minus {
-              cursor: pointer;
-              font-size: 20px;
-            }
-          }
-        }
-      }
-    }
-    
-  }
-  .modalContent {
-    background-color: white;
-    width: 40%;
-    border-radius: 24px;
-    max-height: 90vh;
-    overflow: auto;
-    position: relative;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-
+.main-input, .rs-input-group, .rs-input-group, .rs-picker-toggle {
+  &:hover, &:focus-within {
+    border-color: var(--light-color) !important;
+    outline: none !important;
   }
 }
-@media (max-width: 620px) {
-  .modalContainer {
-    .modalContent {
-      width: 98%;
-    }
-  }
+.rs-picker-default, .rs-input-group {
+  width: 100%;
+}
+.rs-picker-toggle, .rs-input-group {
+  border-radius: 57px !important;
 }
 @media (min-width: 768px) {
   .container {
