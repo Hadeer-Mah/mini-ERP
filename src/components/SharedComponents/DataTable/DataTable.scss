@@ -16,6 +16,8 @@
     }
     .table-head {
       th {
+        font-size: 12px;
+        font-weight: 600;
         padding: 10px;
         text-align: start;
         white-space: nowrap;
@@ -35,6 +37,7 @@
         cursor: pointer;
         
         td {
+          font-size: 12px;
           padding: 0 10px;
           text-align: start;
           border-top: 1px solid #eaecf0;

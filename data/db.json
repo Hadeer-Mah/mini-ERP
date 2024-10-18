@@ -1,0 +1,22 @@
+{
+  "employees": [
+    {
+      "Employee": "Ahmed Ali",
+      "StartDate": "1/1/2024",
+      "Phone": "01029384877",
+      "Email": "example@gmail.com",
+      "Role": "IT",
+      "image": "",
+      "Active": true
+    },
+    {
+        "Employee": "Mohammed Adel",
+        "StartDate": "1/2/2024",
+        "Phone": "01029344023",
+        "Email": "example@gmail.com",
+        "Role": "Software",
+        "image": "",
+        "Active": true
+      }
+  ]
+}
