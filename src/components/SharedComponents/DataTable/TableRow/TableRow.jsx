@@ -1,9 +1,12 @@
 export default function TableRow({ tableRow, tableColumns }) {
     let columns = tableColumns;
-  
+    let rowClick = tableRow?.rowClick ? tableRow.rowClick : () => {};
     return (
       <tr
         className={"table-row"}
+        onClick={() => {
+          rowClick();
+        }}
       >
         {tableRow &&
           columns.map((dataCell, i) => {

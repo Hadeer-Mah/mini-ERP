@@ -7,7 +7,7 @@ export default function ToggleButton({isActive, state, setState, name, disabled 
           id="activation"
             className="toggle-checkbox"
             type="checkbox"
-            checked={JSON.parse(isActive)}
+            checked={isActive}
             onChange={(e)=>{
               setState({
                 ...state,

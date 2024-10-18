@@ -15,7 +15,7 @@ export default function Navbar() {
                 <div className="absolute flex justify-center items-center rounded-full bg-[var(--primary-color)] top-0 end-0 w-[18px] h-[18px] text-[10px] text-white font-semibold">8+</div>
             </div>
             <div className="flex gap-1 items-center">
-                <div className="h-[44px] w-[44px] rounded-full">
+                <div className="h-[44px] w-[44px] rounded-full overflow-hidden">
                   <img src={user} alt="user" className="w-full h-full object-contain"/>
                 </div>
                 <div className="flex flex-col">

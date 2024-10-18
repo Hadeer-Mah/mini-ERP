@@ -2,6 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 
 * {
   padding: 0;
@@ -22,12 +24,26 @@
 }
 body {
   background-color: #f3f1f1;
+  font-family: "Poppins", sans-serif;
 }
 p {
   margin: 0;
 }
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    background-color: #eaecf0;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+  }
+  scrollbar-track-color: #eaecf0;
+  scrollbar-color: var(--primary-color);
+  scrollbar-width: 10px;
+}
 .main-input, .rs-input-group, .rs-input-group, .rs-picker-toggle {
-  &:hover, &:focus-within {
+  &:hover, &:focus-within &:active {
     border-color: var(--light-color) !important;
     outline: none !important;
   }
@@ -37,6 +53,9 @@ p {
 }
 .rs-picker-toggle, .rs-input-group {
   border-radius: 57px !important;
+}
+.rs-modal-content {
+  padding: 0 !important;
 }
 @media (min-width: 768px) {
   .container {

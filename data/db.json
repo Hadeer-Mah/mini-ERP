@@ -1,22 +1,44 @@
 {
   "employees": [
     {
-      "Employee": "Ahmed Ali",
-      "StartDate": "1/1/2024",
-      "Phone": "01029384877",
-      "Email": "example@gmail.com",
-      "Role": "IT",
-      "image": "",
-      "Active": true
+      "id": "acd93523-6d1d-421f-9797-b4959b580414",
+      "Employee": "Mahmoud Ahmed",
+      "StartDate": "2024-10-23T21:00:00.000Z",
+      "Phone": "01920938937",
+      "Email": "mahmoud@gmail.com",
+      "Role": "Software",
+      "Active": true,
+      "Image": "blob:http://localhost:3000/dd240c84-0ae9-4c43-90eb-0eb2397e14e2"
     },
     {
-        "Employee": "Mohammed Adel",
-        "StartDate": "1/2/2024",
-        "Phone": "01029344023",
-        "Email": "example@gmail.com",
-        "Role": "Software",
-        "image": "",
-        "Active": true
-      }
+      "id": "02ec63f4-c94b-4e08-b9a4-0bdddff6e857",
+      "Employee": "Ahmed Ali",
+      "StartDate": "2024-10-28T21:00:00.000Z",
+      "Phone": "01928738775",
+      "Email": "ahmed@gmail.com",
+      "Role": "IT",
+      "Active": false,
+      "Image": "blob:http://localhost:3000/02ef9f62-9538-4932-b165-de204671f84c"
+    },
+    {
+      "id": "f19e82d0-0c73-4741-8e8a-05354fde9abd",
+      "Employee": "Salah",
+      "StartDate": "2024-10-22T21:00:00.000Z",
+      "Phone": "543089347853",
+      "Email": "mahmoud@gmail.com",
+      "Role": "Software",
+      "Active": true,
+      "Image": "blob:http://localhost:3000/9b535c77-9b1f-442b-8d48-2705f0ec7448"
+    },
+    {
+      "id": "75a0a5f0-3a7d-4780-a5fd-abbc3e0363f5",
+      "Employee": "",
+      "StartDate": "",
+      "Phone": "",
+      "Email": "",
+      "Role": "",
+      "Active": true,
+      "Image": "blob:http://localhost:3000/ffa7a978-af12-4377-a28e-525917d8744f"
+    }
   ]
 }

@@ -35,6 +35,9 @@
         height: 72px;
         margin-bottom: 10px;
         cursor: pointer;
+        &:hover {
+          background-color: var(--heading-bg);
+        }
         
         td {
           font-size: 12px;

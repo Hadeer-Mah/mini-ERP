@@ -6,29 +6,58 @@ import AddEmployee from "./AddEmployee/AddEmployee";
 import trash from "../../assets/svgs/dataTable/trash.svg";
 import active from "../../assets/svgs/dataTable/active.svg";
 import inActive from "../../assets/svgs/dataTable/inActive.svg";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Employees() {
+  const navigate = useNavigate();
   const [employeesList, setEmployeesList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
 
   const formattedEmployees = employeesList?.map((employee) => {
     return {
-      "Employee": employee.Employee,
-      "Start Date": employee.StartDate,
-      "Phone": employee.Phone,
-      "Email": employee.Email,
-      "Role": employee.Role,
-      "image": employee.image,
-      "Active": <img src={employee.Active ? active : inActive} alt="status"className="w-[20px]"/>,
-      "": <img src={trash} alt="delete" className="cursor-pointer w-[20px]"/>,
+      Employee: (
+        <div className="flex gap-1 items-center">
+          <div className="w-7 h-7 rounded-full overflow-hidden">
+            <img
+              src={employee.Image}
+              alt="user image"
+              className="object-contain"
+            />
+          </div>
+          <p>{employee.Employee}</p>
+        </div>
+      ),
+      "Start Date": new Date(employee.StartDate)
+        .toLocaleDateString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+        })
+        .replace(/-/g, " / "),
+      Phone: employee.Phone,
+      Email: employee.Email,
+      Role: employee.Role,
+      image: employee.image,
+      Active: (
+        <img
+          src={employee.Active ? active : inActive}
+          alt="status"
+          className="w-[20px]"
+        />
+      ),
+      "": <img src={trash} alt="delete" className="cursor-pointer w-[20px]" />,
+      rowClick: () => {
+        navigate(`/employees/${employee.id}`);
+      },
     };
   });
 
   useEffect(() => {
     const url = searchTerm
-      ? `http://localhost:8000/employees?Employee=${encodeURIComponent(searchTerm)}`
+      ? `http://localhost:8000/employees?Employee=${encodeURIComponent(
+          searchTerm
+        )}`
       : "http://localhost:8000/employees";
     fetch(url)
       .then((response) => response.json())
@@ -50,7 +79,11 @@ export default function Employees() {
       <div className="rounded-2xl p-3 bg-white w-full">
         <div className="flex items-center gap-2">
           <div className="w-[calc(100%-170px)]">
-            <Searchbar state={searchTerm} setState={setSearchTerm} placeholder={"Search Employees by Name"}/>
+            <Searchbar
+              state={searchTerm}
+              setState={setSearchTerm}
+              placeholder={"Search Employees by Name"}
+            />
           </div>
           <MainButton
             btnTitle={"+ New Employee"}
