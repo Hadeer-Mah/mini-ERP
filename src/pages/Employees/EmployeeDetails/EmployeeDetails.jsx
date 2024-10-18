@@ -51,7 +51,7 @@ export default function EmployeeDetails() {
         <InfoCard title={"Active"}>
           <div className="flex gap-6 items-center px-3 py-5">
             <p className="font-medium text-[var(--secondary-color)]">status</p>
-            <ToggleButton checked={true} onChange={() => {}} />
+            <ToggleButton isActive={true} disabled={true}/>
           </div>
         </InfoCard>
       </div>
