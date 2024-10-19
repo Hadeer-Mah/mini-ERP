@@ -7,6 +7,7 @@ This is a mini ERP application designed to manage employees. The core functional
 ## Features
 
 - **List Employees:** View all employees with basic information like name, role, and contact details.
+  **List Made of Limit Two Items in the Page to Simplify Pagination Testing**
 - **Search Employees** Search in Employees by their names.
 - **Pagination** Paginate through employees list pages.
 - **Delete Employees** Delete selected Employees and their data.
