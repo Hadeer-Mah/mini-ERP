@@ -67,7 +67,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
     if (activeSection === "Personal") {
       setActiveSection("Image");
     } else if (activeSection === "Image") {
-      setActiveSection("Overview");
+      setActiveSection("Preview");
     } else {
       addingEmployeeHandler();
     }
@@ -75,7 +75,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
   function prevNavigationFunction() {
     if (activeSection === "Image") {
       setActiveSection("Personal");
-    } else if (activeSection === "Overview") {
+    } else if (activeSection === "Preview") {
       setActiveSection("Image");
     }
   }
@@ -92,26 +92,53 @@ export default function AddEmployee({ openModal, setOpenModal }) {
       );
       return;
     }
-    const imageUrl = imageFile ? URL.createObjectURL(imageFile) : null; // For demonstration, use the local URL
-
-    const newEmployee = {
-      ...employeeData,
-      id: uuidv4(),
-      Image: imageUrl,
+      const convertImageToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = reject;
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          resolve(null);
+        }
+      });
     };
-
-    // Step 3: Send a POST request to the JSON server
-    fetch("http://localhost:8000/employees", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newEmployee),
-    })
+  
+    convertImageToBase64(imageFile)
+      .then((base64Image) => {
+        const newEmployee = {
+          ...employeeData,
+          id: uuidv4(),
+          Image: base64Image,
+        };
+  
+        return fetch("http://localhost:8000/employees", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newEmployee),
+        });
+      })
       .then((response) => response.json())
       .then((data) => {
         console.log("Employee added:", data);
-        setOpenModal(false);
+        toaster.push(
+          <Message type="success" closable>
+            Employee added successfully
+          </Message>,
+          {
+            placement: "topCenter",
+            duration: 3000,
+          }
+        );
+        setTimeout(() => {
+          setOpenModal(false);
+          window.location.reload();
+        }, 3000); 
       })
       .catch((error) => {
         console.error("Error adding employee:", error);
@@ -124,13 +151,14 @@ export default function AddEmployee({ openModal, setOpenModal }) {
       backdrop
       keyboard={false}
       overflow
+      className="box-shadow"
     >
       <Modal.Header className="border-b border-[#EDEDED] p-4">
         <Modal.Title>Add New Employee</Modal.Title>
       </Modal.Header>
       <Modal.Body className="px-4 custom-scrollbar ">
         <div className="flex justify-center mb-4 mt-2">
-          <div className="flex gap-2 items-center flex-wrap">
+          <div className="flex gap-2 items-center flex-wrap justify-center">
             <div className="flex flex-col gap-2 items-center">
               <div
                 className={`w-[28px] h-[28px] rounded-full ${
@@ -149,7 +177,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                 Personal Data
               </p>
             </div>
-            <img src={dotLine} alt="line" className="pb-4" />
+            <img src={dotLine} alt="line" className="pb-6" />
             <div className="flex flex-col gap-2 items-center">
               <div
                 className={`w-[28px] h-[28px] rounded-full ${
@@ -168,23 +196,23 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                 Image
               </p>
             </div>
-            <img src={dotLine} alt="line" className="pb-4" />
+            <img src={dotLine} alt="line" className="pb-6" />
             <div className="flex flex-col gap-2 items-center">
               <div
                 className={`w-[28px] h-[28px] rounded-full ${
-                  activeSection === "Overview"
+                  activeSection === "Preview"
                     ? "bg-[var(--primary-color)] outline outline-1 outline-[var(--primary-color)] border border-white]"
                     : "bg-[var(--secondary-color)]"
                 }`}
               ></div>
               <p
                 className={`text-xs font-medium ${
-                  activeSection === "Overview"
+                  activeSection === "Preview"
                     ? "text-[var(--primary-color)]"
                     : "secondary-color"
                 }`}
               >
-                Overview
+                Preview
               </p>
             </div>
           </div>
@@ -220,7 +248,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                     <img
                       src={URL.createObjectURL(imageFile)}
                       alt="user-img"
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="flex flex-col gap-3">
@@ -246,7 +274,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                         onClick={() => setImageFile(null)}
                       >
                         <img src={trash} alt="" />
-                        Delete
+                        Remove
                       </div>
                     </div>
                   </div>
@@ -291,7 +319,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                         <img
                           src={URL.createObjectURL(imageFile)}
                           alt="user"
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     )}
@@ -366,7 +394,7 @@ export default function AddEmployee({ openModal, setOpenModal }) {
           )}
         </div>
         <div className="ml-auto">
-          <MainButton btnTitle={"Next"} onClickFn={nextNavigationFunction} />
+          <MainButton btnTitle={activeSection === "Preview" ? "Apply" : "Next"} onClickFn={nextNavigationFunction} />
         </div>
       </Modal.Footer>
     </Modal>

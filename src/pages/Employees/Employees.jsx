@@ -7,26 +7,33 @@ import trash from "../../assets/svgs/dataTable/trash.svg";
 import active from "../../assets/svgs/dataTable/active.svg";
 import inActive from "../../assets/svgs/dataTable/inActive.svg";
 import { useNavigate } from "react-router-dom";
+import DeleteMsg from "../../components/SharedComponents/DeleteMsg/DeleteMsg";
+import { Message, useToaster } from "rsuite";
 
 export default function Employees() {
   const navigate = useNavigate();
+  const toaster = useToaster();
   const [employeesList, setEmployeesList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsCount, setItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
+  const [isDeletingEmployee, setIsDeletingEmployee] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
 
   const formattedEmployees = employeesList?.map((employee) => {
     return {
       Employee: (
         <div className="flex gap-1 items-center">
-          {employee.Image && <div className="w-7 h-7 rounded-full overflow-hidden">
-            <img
-              src={employee.Image}
-              alt="user image"
-              className="object-contain"
-            />
-          </div>}
+          {employee.Image && (
+            <div className="w-7 h-7 rounded-full overflow-hidden">
+              <img
+                src={employee.Image}
+                alt="user image"
+                className="object-cover w-full h-full"
+              />
+            </div>
+          )}
           <p>{employee.Employee}</p>
         </div>
       ),
@@ -48,7 +55,17 @@ export default function Employees() {
           className="w-[20px]"
         />
       ),
-      "": <div className="cursor-pointer w-[20px] h-[20px]"><img src={trash} alt="delete" /></div>,
+      "": (
+        <div
+          className="cursor-pointer w-[20px] h-[20px]"
+          onClick={() => {
+            setSelectedId(employee.id);
+            setIsDeletingEmployee(true);
+          }}
+        >
+          <img src={trash} alt="delete" />
+        </div>
+      ),
       rowClick: () => {
         navigate(`/employees/${employee.id}`);
       },
@@ -56,10 +73,7 @@ export default function Employees() {
   });
 
   useEffect(() => {
-    const url =searchTerm ? `http://localhost:8000/employees?Employee_like=${encodeURIComponent(
-          searchTerm
-        )}&_page=${activePage}&_limit=2&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
-        : `http://localhost:8000/employees?_page=${activePage}&_limit=2&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
+    const url = `http://localhost:8000/employees?Employee_like=${searchTerm}&_page=${activePage}&_limit=2`;
 
     const fetchEmployees = async () => {
       try {
@@ -83,10 +97,45 @@ export default function Employees() {
     fetchEmployees();
   }, [searchTerm, activePage]);
 
-  function openModalFunction() {
+  async function deletingEmployeeHandler() {
+    try {
+      await fetch(`http://localhost:8000/employees/${selectedId}`, {
+        method: "DELETE",
+      });
+      setIsDeletingEmployee(false);
+      toaster.push(
+        <Message type="success" closable>
+          Employee deleted successfully
+        </Message>,
+        {
+          placement: "topCenter",
+          duration: 2000,
+        }
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+      toaster.push(
+        <Message type="error" closable>
+          Error in deleting employee
+        </Message>,
+        {
+          placement: "topCenter",
+          duration: 3000,
+        }
+      );
+    }
+  }
+
+  function cancelWarningMessageHandler() {
+    setIsDeletingEmployee(false);
+    setSelectedId("")
+  }
+  function openModalHandler() {
     setIsAddingEmployee(true);
   }
-  console.log(employeesList, "list");
   return (
     <>
       {isAddingEmployee && (
@@ -95,7 +144,13 @@ export default function Employees() {
           setOpenModal={setIsAddingEmployee}
         />
       )}
-      <div className="rounded-2xl p-3 bg-white w-full">
+      {isDeletingEmployee && (
+        <DeleteMsg
+          cancelFunction={cancelWarningMessageHandler}
+          deleteFunction={deletingEmployeeHandler}
+        />
+      )}
+      <div className="rounded-2xl p-3 bg-white w-full box-shadow">
         <div className="flex items-center gap-2 flex-wrap">
           <div className="w-[calc(100%-170px)] searchbar">
             <Searchbar
@@ -108,7 +163,7 @@ export default function Employees() {
           <div className="action-btn">
             <MainButton
               btnTitle={"+ New Employee"}
-              onClickFn={openModalFunction}
+              onClickFn={openModalHandler}
             />
           </div>
         </div>

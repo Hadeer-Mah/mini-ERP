@@ -41,6 +41,7 @@ export default function MainInput({
           oneTap
           value={state[name]}
           name={name}
+          className="date-picker-input"
           onChange={(e) => {
             setState({
               ...state,

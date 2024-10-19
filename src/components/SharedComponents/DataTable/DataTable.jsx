@@ -47,6 +47,6 @@ export default function DataTable({
           />
         </div>
       </div>
-    ) : <div className="text-center text-2xl text-[var(--primary-color)]">No Data Found</div>
+    ) : <div className="text-center text-xl text-[var(--primary-color)]">No Data Found</div>
   );
 }

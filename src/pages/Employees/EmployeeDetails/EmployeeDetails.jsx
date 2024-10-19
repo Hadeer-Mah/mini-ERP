@@ -43,7 +43,7 @@ export default function EmployeeDetails() {
                   <img
                     src={employeeData?.Image}
                     alt="user"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               )}
