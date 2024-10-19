@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import { Message, useToaster } from "rsuite";
+import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/SharedComponents/DataTable/DataTable";
 import MainButton from "../../components/SharedComponents/MainButton/MainButton";
 import Searchbar from "../../components/SharedComponents/Searchbar/Searchbar";
+import DeleteMsg from "../../components/SharedComponents/DeleteMsg/DeleteMsg";
 import AddEmployee from "./AddEmployee/AddEmployee";
 import trash from "../../assets/svgs/dataTable/trash.svg";
 import active from "../../assets/svgs/dataTable/active.svg";
 import inActive from "../../assets/svgs/dataTable/inActive.svg";
-import { useNavigate } from "react-router-dom";
-import DeleteMsg from "../../components/SharedComponents/DeleteMsg/DeleteMsg";
-import { Message, useToaster } from "rsuite";
+
 
 export default function Employees() {
   const navigate = useNavigate();
@@ -74,7 +75,6 @@ export default function Employees() {
 
   useEffect(() => {
     const url = `http://localhost:8000/employees?Employee_like=${searchTerm}&_page=${activePage}&_limit=2`;
-
     const fetchEmployees = async () => {
       try {
         const response = await fetch(url);
@@ -87,7 +87,6 @@ export default function Employees() {
         } else {
           setItemsCount(response.headers.get("X-Total-Count"));
         }
-
         setEmployeesList(data);
       } catch (error) {
         console.error("Error fetching employees:", error);

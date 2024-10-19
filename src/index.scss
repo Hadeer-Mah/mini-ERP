@@ -48,7 +48,7 @@ p {
 input {
   font-size: 12px;
 }
-p+p {
+p + p {
   margin-top: 0;
 }
 .active-link {
@@ -72,7 +72,7 @@ p+p {
 .rs-picker-select-menu-item {
   &:hover {
     color: black;
-    background-color: #0269801F;
+    background-color: #0269801f;
     border-radius: 3px;
   }
 }
@@ -126,6 +126,20 @@ p+p {
 }
 .rs-picker-popup {
   padding: 6px 12px;
+}
+.rs-input-group-focus {
+  border-color: var(--light-color) !important;
+  outline: none !important;
+}
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content {
+  background-color: var(--primary-color) !important;
+}
+.rs-calendar-table-cell {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color);
+}
+.rs-picker-select-menu-item-active {
+  color: var(--primary-color) !important;
 }
 @media (min-width: 768px) {
   .container {
