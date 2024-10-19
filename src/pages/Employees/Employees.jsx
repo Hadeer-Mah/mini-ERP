@@ -9,11 +9,12 @@ import AddEmployee from "./AddEmployee/AddEmployee";
 import trash from "../../assets/svgs/dataTable/trash.svg";
 import active from "../../assets/svgs/dataTable/active.svg";
 import inActive from "../../assets/svgs/dataTable/inActive.svg";
-
+import LoaderSpinner from "../../components/SharedComponents/LoaderSpinner/LoaderSpinner";
 
 export default function Employees() {
   const navigate = useNavigate();
   const toaster = useToaster();
+  const [isLoading, setIsLoading] = useState(false);
   const [employeesList, setEmployeesList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsCount, setItemsCount] = useState(0);
@@ -77,6 +78,7 @@ export default function Employees() {
     const url = `http://localhost:8000/employees?Employee_like=${searchTerm}&_page=${activePage}&_limit=2`;
     const fetchEmployees = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(url);
         const data = await response.json();
 
@@ -90,6 +92,8 @@ export default function Employees() {
         setEmployeesList(data);
       } catch (error) {
         console.error("Error fetching employees:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -130,13 +134,14 @@ export default function Employees() {
 
   function cancelWarningMessageHandler() {
     setIsDeletingEmployee(false);
-    setSelectedId("")
+    setSelectedId("");
   }
   function openModalHandler() {
     setIsAddingEmployee(true);
   }
   return (
     <>
+      {isLoading && <LoaderSpinner />}
       {isAddingEmployee && (
         <AddEmployee
           openModal={isAddingEmployee}
