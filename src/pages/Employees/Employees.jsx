@@ -56,9 +56,10 @@ export default function Employees() {
   });
 
   useEffect(() => {
-    const url =`http://localhost:8000/employees?Employee=${encodeURIComponent(
+    const url =searchTerm ? `http://localhost:8000/employees?Employee_like=${encodeURIComponent(
           searchTerm
-        )}&_page=${activePage}&_limit=8&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
+        )}&_page=${activePage}&_limit=2&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
+        : `http://localhost:8000/employees?_page=${activePage}&_limit=2&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
 
     const fetchEmployees = async () => {
       try {

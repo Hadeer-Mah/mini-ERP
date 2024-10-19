@@ -20,7 +20,7 @@ export default function Navbar() {
                 </div>
                 <div className="flex flex-col">
                     <p className="text-[#323232] font-bold">Mohamed Kamal</p>
-                    <p className="text-[#737791] text=[10.5px]">Admin</p>
+                    <span className="text-[#737791] text=[10.5px]">Admin</span>
                 </div>
             </div>
         </div>

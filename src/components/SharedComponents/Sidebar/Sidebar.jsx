@@ -45,7 +45,7 @@ export default function Sidebar() {
       </div>
       <ul className="flex flex-col gap-3 py-8">
         {navLinks?.map((link, i) => {
-          return <li key={i} className={`px-4 py-2 rounded-xl flex gap-3 items-center font-medium cursor-pointer ${activeLink(link.path) ? "bg-[white] text-[var(--primary-color)]" : "text-white"}`} onClick={()=>{
+          return <li key={i} className={`px-4 py-2 rounded-xl flex gap-3 items-center font-medium cursor-pointer ${activeLink(link.path) ? "bg-[white] text-[var(--primary-color)] active-link" : "text-white inactive-link"}`} onClick={()=>{
             navigate(link.path)
           }}>
             {link.icon}

@@ -42,8 +42,8 @@ p {
   scrollbar-color: var(--primary-color);
   scrollbar-width: 10px;
 }
-.main-input, .rs-input-group, .rs-input-group, .rs-picker-toggle {
-  &:hover, &:focus-within &:active {
+.main-input, .rs-input-group, .rs-input-group, .rs-picker-toggle, .rs-btn-default {
+  &:hover, &:focus-within &:active &:focus {
     border-color: var(--light-color) !important;
     outline: none !important;
   }
@@ -64,8 +64,19 @@ p {
   border: 1px solid var(--light-color);
   color: var(--light-color);
 }
-.rs-pagination-btn-active {
-  border-color: var(--primary-color) !important;
+.rs-pagination-btn-active, .rs-picker.rs-picker-focused, .rs-picker-toggle-active, .rs-btn-default {
+  border-color: var(--light-color) !important;
+  outline: none;
+}
+.active-link {
+  svg > g >* {
+    fill: var(--primary-color);
+  }
+}
+.inactive-link {
+  svg > g >* {
+    fill: white;
+  }
 }
 @media (min-width: 768px) {
   .container {

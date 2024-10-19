@@ -40,7 +40,7 @@ export default function DataTable({
             first
             size="xs"
             total={itemsCount}
-            limit={8}
+            limit={2}
             activePage={activePage}
             onChangePage={setActivePage}
             ellipsis={false}
