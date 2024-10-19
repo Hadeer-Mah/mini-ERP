@@ -12,19 +12,21 @@ export default function Employees() {
   const navigate = useNavigate();
   const [employeesList, setEmployeesList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [itemsCount, setItemsCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
 
   const formattedEmployees = employeesList?.map((employee) => {
     return {
       Employee: (
         <div className="flex gap-1 items-center">
-          <div className="w-7 h-7 rounded-full overflow-hidden">
+          {employee.Image && <div className="w-7 h-7 rounded-full overflow-hidden">
             <img
               src={employee.Image}
               alt="user image"
               className="object-contain"
             />
-          </div>
+          </div>}
           <p>{employee.Employee}</p>
         </div>
       ),
@@ -46,7 +48,7 @@ export default function Employees() {
           className="w-[20px]"
         />
       ),
-      "": <img src={trash} alt="delete" className="cursor-pointer w-[20px]" />,
+      "": <div className="cursor-pointer w-[20px] h-[20px]"><img src={trash} alt="delete" /></div>,
       rowClick: () => {
         navigate(`/employees/${employee.id}`);
       },
@@ -54,20 +56,36 @@ export default function Employees() {
   });
 
   useEffect(() => {
-    const url = searchTerm
-      ? `http://localhost:8000/employees?Employee=${encodeURIComponent(
+    const url =`http://localhost:8000/employees?Employee=${encodeURIComponent(
           searchTerm
-        )}`
-      : "http://localhost:8000/employees";
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setEmployeesList(data))
-      .catch((error) => console.error("Error fetching employees:", error));
-  }, [searchTerm]);
+        )}&_page=${activePage}&_limit=8&timestamp=${new Date().getTime()}&_sort=id&_order=asc`
+
+    const fetchEmployees = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!response.headers.get("X-Total-Count")) {
+          const totalResponse = await fetch(`http://localhost:8000/employees`);
+          const totalData = await totalResponse.json();
+          setItemsCount(totalData?.length);
+        } else {
+          setItemsCount(response.headers.get("X-Total-Count"));
+        }
+
+        setEmployeesList(data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      }
+    };
+
+    fetchEmployees();
+  }, [searchTerm, activePage]);
 
   function openModalFunction() {
     setIsAddingEmployee(true);
   }
+  console.log(employeesList, "list");
   return (
     <>
       {isAddingEmployee && (
@@ -77,18 +95,21 @@ export default function Employees() {
         />
       )}
       <div className="rounded-2xl p-3 bg-white w-full">
-        <div className="flex items-center gap-2">
-          <div className="w-[calc(100%-170px)]">
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="w-[calc(100%-170px)] searchbar">
             <Searchbar
               state={searchTerm}
               setState={setSearchTerm}
+              setActivePage={setActivePage}
               placeholder={"Search Employees by Name"}
             />
           </div>
-          <MainButton
-            btnTitle={"+ New Employee"}
-            onClickFn={openModalFunction}
-          />
+          <div className="action-btn">
+            <MainButton
+              btnTitle={"+ New Employee"}
+              onClickFn={openModalFunction}
+            />
+          </div>
         </div>
         <div className="my-6 overflow-hidde w-full">
           <DataTable
@@ -103,6 +124,9 @@ export default function Employees() {
               "",
             ]}
             tableRows={formattedEmployees}
+            itemsCount={itemsCount}
+            activePage={activePage}
+            setActivePage={setActivePage}
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal } from "rsuite";
+import { Message, Modal, useToaster } from "rsuite";
 import { v4 as uuidv4 } from "uuid";
 import MainInput from "../../../components/SharedComponents/MainInput/MainInput";
 import dotLine from "../../../assets/svgs/dots.svg";
@@ -11,6 +11,7 @@ import InfoCard from "../../../components/SharedComponents/InfoCard/InfoCard";
 import ToggleButton from "../../../components/SharedComponents/ToggleButton/ToggleButton";
 
 export default function AddEmployee({ openModal, setOpenModal }) {
+  const toaster = useToaster();
   const [employeeData, setEmployeeData] = useState({
     Employee: "",
     StartDate: "",
@@ -79,10 +80,19 @@ export default function AddEmployee({ openModal, setOpenModal }) {
     }
   }
   function addingEmployeeHandler() {
-    if (Object.values(employeeData).some((value) => value === '')) {
+    if (Object.values(employeeData).some((value) => value === "")) {
+      toaster.push(
+        <Message type="error" closable>
+          You must fill the required inputs first
+        </Message>,
+        {
+          placement: "topCenter",
+          duration: 4000,
+        }
+      );
       return;
     }
-    const imageUrl = URL.createObjectURL(imageFile); // For demonstration, use the local URL
+    const imageUrl = imageFile ? URL.createObjectURL(imageFile) : null; // For demonstration, use the local URL
 
     const newEmployee = {
       ...employeeData,
@@ -120,19 +130,21 @@ export default function AddEmployee({ openModal, setOpenModal }) {
       </Modal.Header>
       <Modal.Body className="px-4 custom-scrollbar ">
         <div className="flex justify-center mb-4 mt-2">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center flex-wrap">
             <div className="flex flex-col gap-2 items-center">
               <div
-                className={`w-[28px] h-[28px] rounded-full ${activeSection === "Personal"
+                className={`w-[28px] h-[28px] rounded-full ${
+                  activeSection === "Personal"
                     ? "bg-[var(--primary-color)] outline outline-1 outline-[var(--primary-color)] border border-white]"
                     : "bg-[var(--secondary-color)]"
-                  }`}
+                }`}
               ></div>
               <p
-                className={`text-xs font-medium ${activeSection === "Personal"
+                className={`text-xs font-medium ${
+                  activeSection === "Personal"
                     ? "text-[var(--primary-color)]"
                     : "secondary-color"
-                  }`}
+                }`}
               >
                 Personal Data
               </p>
@@ -140,16 +152,18 @@ export default function AddEmployee({ openModal, setOpenModal }) {
             <img src={dotLine} alt="line" className="pb-4" />
             <div className="flex flex-col gap-2 items-center">
               <div
-                className={`w-[28px] h-[28px] rounded-full ${activeSection === "Image"
+                className={`w-[28px] h-[28px] rounded-full ${
+                  activeSection === "Image"
                     ? "bg-[var(--primary-color)] outline outline-1 outline-[var(--primary-color)] border border-white]"
                     : "bg-[var(--secondary-color)]"
-                  }`}
+                }`}
               ></div>
               <p
-                className={`text-xs font-medium ${activeSection === "Image"
+                className={`text-xs font-medium ${
+                  activeSection === "Image"
                     ? "text-[var(--primary-color)]"
                     : "secondary-color"
-                  }`}
+                }`}
               >
                 Image
               </p>
@@ -157,16 +171,18 @@ export default function AddEmployee({ openModal, setOpenModal }) {
             <img src={dotLine} alt="line" className="pb-4" />
             <div className="flex flex-col gap-2 items-center">
               <div
-                className={`w-[28px] h-[28px] rounded-full ${activeSection === "Overview"
+                className={`w-[28px] h-[28px] rounded-full ${
+                  activeSection === "Overview"
                     ? "bg-[var(--primary-color)] outline outline-1 outline-[var(--primary-color)] border border-white]"
                     : "bg-[var(--secondary-color)]"
-                  }`}
+                }`}
               ></div>
               <p
-                className={`text-xs font-medium ${activeSection === "Overview"
+                className={`text-xs font-medium ${
+                  activeSection === "Overview"
                     ? "text-[var(--primary-color)]"
                     : "secondary-color"
-                  }`}
+                }`}
               >
                 Overview
               </p>
@@ -194,8 +210,9 @@ export default function AddEmployee({ openModal, setOpenModal }) {
           <>
             <p className="font-medium">Add Image</p>
             <div
-              className={`border-2 border-dashed border-[#B8B8B8] flex ${imageFile ? "justify-start" : "justify-center"
-                } items-center w-full h-[150px] rounded-2xl mt-2 px-3`}
+              className={`border-2 border-dashed border-[#B8B8B8] flex ${
+                imageFile ? "justify-start" : "justify-center"
+              } items-center w-full h-[150px] rounded-2xl mt-2 px-3`}
             >
               {imageFile ? (
                 <div className="flex gap-4 items-center">
@@ -209,7 +226,10 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                   <div className="flex flex-col gap-3">
                     <p className="text-base">{imageFile?.name}</p>
                     <div className="flex gap-4 items-center text-xs">
-                      <label htmlFor="changeImg" className="flex gap-1 items-center cursor-pointer text-[14px] text-[var(--secondary-color)]">
+                      <label
+                        htmlFor="changeImg"
+                        className="flex gap-1 items-center cursor-pointer text-[14px] text-[var(--secondary-color)]"
+                      >
                         <img src={change} alt="change" />
                         Change
                         <input
@@ -266,15 +286,16 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                     Employee
                   </p>
                   <div className="flex items-center gap-1">
-                    <div className="w-6 h-6 rounded-full overflow-hidden">
-                      {imageFile && (
+                    {imageFile && (
+                      <div className="w-6 h-6 rounded-full overflow-hidden">
                         <img
                           src={URL.createObjectURL(imageFile)}
                           alt="user"
                           className="w-full h-full object-contain"
                         />
-                      )}
-                    </div>
+                      </div>
+                    )}
+
                     {employeeData?.Employee}
                   </div>
                 </div>
@@ -305,13 +326,15 @@ export default function AddEmployee({ openModal, setOpenModal }) {
                     start date
                   </div>
                   <p>
-                    {employeeData?.StartDate ? new Date(employeeData?.StartDate)
-                      .toLocaleDateString("en-US", {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
-                      })
-                      .replace(/-/g, " / ") : ""}
+                    {employeeData?.StartDate
+                      ? new Date(employeeData?.StartDate)
+                          .toLocaleDateString("en-US", {
+                            month: "2-digit",
+                            day: "2-digit",
+                            year: "numeric",
+                          })
+                          .replace(/-/g, " / ")
+                      : ""}
                   </p>
                 </div>
               </InfoCard>

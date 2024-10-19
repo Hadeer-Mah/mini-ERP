@@ -4,9 +4,9 @@ import MainRoutes from "../routes/MainRoutes";
 
 export default function MainLayout() {
   return (
-    <div className="container mx-auto grid md:grid-cols-4 grid-cols-1">
+    <div className="container mx-auto flex">
         <Sidebar/>
-        <div className="col-span-3">
+        <div className="w-[calc(100%-250px)] layout">
             <Navbar/>
             <MainRoutes/>
         </div>

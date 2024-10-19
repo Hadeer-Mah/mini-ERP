@@ -39,7 +39,7 @@ export default function Sidebar() {
     }
   }
   return (
-    <div className="w-full h-svh bg-[--primary-color] px-2 py-6">
+    <div className="w-[250px] h-svh bg-[--primary-color] px-2 py-6 sidebar sticky top-0 bottom-0">
       <div className="flex items-center justify-center">
         <img src={logo} alt="logo" />
       </div>
@@ -49,7 +49,7 @@ export default function Sidebar() {
             navigate(link.path)
           }}>
             {link.icon}
-            {link?.title}
+            <span className="list-title">{link?.title}</span>
           </li>
         })}
       </ul>

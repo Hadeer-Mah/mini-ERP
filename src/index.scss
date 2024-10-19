@@ -57,9 +57,40 @@ p {
 .rs-modal-content {
   padding: 0 !important;
 }
+.rs-pagination-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--light-color);
+  color: var(--light-color);
+}
+.rs-pagination-btn-active {
+  border-color: var(--primary-color) !important;
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
+  }
+}
+@media (max-width: 992px) {
+  .sidebar {
+    width: 70px;
+    .list-title {
+      display: none;
+    }
+  }
+  .layout {
+    width: calc(100% - 70px);
+    left: 70px;
+  }
+  .searchbar {
+    width: 100%;
+  }
+  .action-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    order: -1;
   }
 }
 @media (min-width: 992px) {
