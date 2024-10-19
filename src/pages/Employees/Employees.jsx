@@ -141,7 +141,7 @@ export default function Employees() {
   }
   return (
     <>
-      {isLoading && <LoaderSpinner />}
+      {/* {isLoading && <LoaderSpinner />} */}
       {isAddingEmployee && (
         <AddEmployee
           openModal={isAddingEmployee}
